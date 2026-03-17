@@ -10,10 +10,10 @@ public abstract class Conta {
     boolean status;
 
 
-    public Conta(long idConta, double saldoAtual, double limite, String chavePix, String nome, String cpf, boolean status) {
+    public Conta(long idConta, double saldoAtual, String chavePix, String nome, String cpf, boolean status) {
         this.idConta = idConta;
         this.saldoAtual = saldoAtual;
-        this.limite = limite;
+        this.limite = saldoAtual;
         this.chavePix = chavePix;
         this.nome = nome;
         this.cpf = cpf;

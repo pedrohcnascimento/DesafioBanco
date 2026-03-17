@@ -22,6 +22,6 @@ public class Menus {
                 """;
 
     public static String menuInformacoesContaPrincipal = """
-            Digite o número da conta ou seu CPF para exibir as informações:
+            Digite o seu CPF para exibir as informações:
             """;
 }

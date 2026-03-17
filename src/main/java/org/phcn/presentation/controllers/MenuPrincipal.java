@@ -37,13 +37,11 @@ public class MenuPrincipal {
                     break;
                 case 6:
                     System.out.println(Menus.menuInformacoesContaPrincipal);
-                    if(scanner.hasNextLong()){
-                        service.exibirInformacoesConta(scanner.nextLong());
-                    } else if(scanner.hasNextLine()) {
-                        service.exibirInformacoesConta(scanner.nextLine());
-                    } else {
-                        System.out.println("Entrada inválida, tente novamente!");
+                    var opcaoInformacoes = scanner.next();
+                    if(opcaoInformacoes.length() ==11){
+                        service.exibirInformacoesConta(opcaoInformacoes);
                     }
+
                     break;
                 case 7:
                     System.out.println("Saindo do sistema, obrigado por usar nossos serviços!");

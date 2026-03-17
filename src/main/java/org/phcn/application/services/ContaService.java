@@ -5,6 +5,7 @@ import org.phcn.domain.entitys.Corrente;
 import org.phcn.domain.entitys.Poupanca;
 import org.phcn.domain.entitys.Salario;
 import org.phcn.presentation.texts.Menus;
+import org.phcn.presentation.texts.Respostas;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,6 +85,7 @@ public class ContaService {
                     Digite o valor do depósito inicial:
                     """);
             conta.setSaldoAtual(scanner.nextDouble());
+            conta.setLimite(conta.getSaldoAtual());
         } else if(opcaoDeposito == 2){
             System.out.println("""
                     Depósito inicial não realizado, saldo atual será 0.
@@ -93,15 +95,8 @@ public class ContaService {
             System.out.println("Opção inválida, tente novamente!");
         }
 
-        System.out.printf("""
-                Conta criada com sucesso!);
-                Número da conta: %d
-                Nome do titular: %s
-                CPF do titular: %s
-                Chave pix: %s
-                Saldo atual: %.2f,
-                Limite: %.2f
-                %n""",
+        System.out.println(Respostas.respostaCadastroConta);
+        System.out.printf(Respostas.respostaExibirInformacoesConta,
                 conta.getIdConta(),
                 conta.getNome(),
                 conta.getCpf(),
@@ -112,41 +107,10 @@ public class ContaService {
         contas.add(conta);
     }
 
-    public void exibirInformacoesConta(long numeroConta){
-        for (Conta conta : contas) {
-            if (conta.getIdConta() == numeroConta) {
-                System.out.printf("""
-                        Número da conta: %d
-                        Nome do titular: %s
-                        CPF do titular: %s
-                        Chave pix: %s
-                        Saldo atual: %.2f,
-                        Limite: %.2f
-                        %n""",
-                        conta.getIdConta(),
-                        conta.getNome(),
-                        conta.getCpf(),
-                        conta.getChavePix(),
-                        conta.getSaldoAtual(),
-                        conta.getLimite()
-                );
-                return;
-            }
-        }
-        System.out.println("Conta não encontrada!");
-    }
-
     public void exibirInformacoesConta(String cpfTitular){
         for (Conta conta : contas) {
             if (conta.getCpf().equals(cpfTitular)) {
-                System.out.printf("""
-                        Número da conta: %d
-                        Nome do titular: %s
-                        CPF do titular: %s
-                        Chave pix: %s
-                        Saldo atual: %.2f,
-                        Limite: %.2f
-                        %n""",
+                System.out.printf(Respostas.respostaExibirInformacoesConta,
                         conta.getIdConta(),
                         conta.getNome(),
                         conta.getCpf(),
