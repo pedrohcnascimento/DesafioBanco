@@ -2,6 +2,8 @@ package org.phcn.presentation.controllers;
 
 import org.phcn.application.services.ContaService;
 import org.phcn.presentation.texts.Menus;
+import org.phcn.presentation.texts.Perguntas;
+import org.phcn.presentation.texts.Respostas;
 
 import java.util.Scanner;
 
@@ -12,9 +14,12 @@ public class MenuPrincipal {
      public void MenuPrincipal(){
         int opcaoSaida;
         long numeroConta = 1;
+        String opcaoCpf;
+
         do {
             System.out.println(Menus.menuPrincipal);
             opcaoSaida = scanner.nextInt();
+            scanner.nextLine();
 
             switch (opcaoSaida){
                 case 1:
@@ -26,28 +31,52 @@ public class MenuPrincipal {
                     break;
 
                 case 3:
+                    System.out.println(Perguntas.cpfNecessario);
+                    opcaoCpf = scanner.nextLine();
 
+                    while (opcaoCpf.length() != 11){
+                        System.out.println(Respostas.cpfInvalido);
+                        opcaoCpf = scanner.nextLine();
+                    }
+                    service.fazerSaque(opcaoCpf);
                     break;
-
                 case 4:
+                    System.out.println(Perguntas.cpfNecessario);
+                    opcaoCpf = scanner.nextLine();
 
+                    while(opcaoCpf.length() != 11){
+                        System.out.println(Respostas.cpfInvalido);
+                        opcaoCpf = scanner.nextLine();
+                    }
+                    service.fazerDeposito(opcaoCpf);
                     break;
                 case 5:
+                    System.out.println(Perguntas.cpfNecessario);
+                    opcaoCpf = scanner.nextLine();
 
-                    break;
-                case 6:
-                    System.out.println(Menus.menuInformacoesContaPrincipal);
-                    var opcaoInformacoes = scanner.next();
-                    if(opcaoInformacoes.length() ==11){
-                        service.exibirInformacoesConta(opcaoInformacoes);
+                    while (opcaoCpf.length() != 11){
+                        System.out.println(Respostas.cpfInvalido);
+                        opcaoCpf = scanner.nextLine();
                     }
 
+                    service.fecharConta(opcaoCpf);
+                    break;
+                case 6:
+                    System.out.println(Perguntas.cpfNecessario);
+                    opcaoCpf = scanner.nextLine();
+
+                    while (opcaoCpf.length() != 11){
+                        System.out.println(Respostas.cpfInvalido);
+                        opcaoCpf = scanner.nextLine();
+                    }
+
+                    service.exibirInformacoesConta(opcaoCpf);
                     break;
                 case 7:
                     System.out.println("Saindo do sistema, obrigado por usar nossos serviços!");
                     break;
                 default:
-                    System.out.println("Opção inválida, tente novamente!");
+                    System.out.println(Respostas.opcaoInvalida);
             }
         }while (opcaoSaida !=7);
     }

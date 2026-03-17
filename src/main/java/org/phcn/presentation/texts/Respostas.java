@@ -30,4 +30,28 @@ public class Respostas {
             Saldo atual: %.2f,
             Limite: %.2f
             %n""";
+
+    public static String cpfInvalido = """
+            CPF inválido, tente novamente!
+            """;
+
+    public static String opcaoInvalida = """
+            Opção inválida, tente novamente!
+            """;
+
+    public static String chavePixPersonalizadaNaoDefinida = """
+            Chave pix personalizada não definida, chave pix padrão será o CPF do titular.
+            """;
+
+    public static String depositoNaoRealizado = """
+            Depósito não realizado, saldo atual será 0.
+            """;
+
+    public static String contaNaoEncontradaOuFechada = """
+            Conta não encontrada ou fechada!
+            """;
+
+    public static String limiteUltrapassado = """
+            Você não possui dinheiro o suficiente em sua conta para realizar esta ação!
+            """;
 }

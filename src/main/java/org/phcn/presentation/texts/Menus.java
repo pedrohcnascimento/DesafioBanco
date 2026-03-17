@@ -21,7 +21,15 @@ public class Menus {
                 3- Conta Salário
                 """;
 
-    public static String menuInformacoesContaPrincipal = """
-            Digite o seu CPF para exibir as informações:
+    public static String menuDepositoInicial = """
+            Deseja realizar depósito inicial?
+            1- Sim
+            2- Não
+            """;
+
+    public static String menuChavePixPersonalizada = """
+            Deseja personalizar chave pix?
+            1- Sim
+            2- Não
             """;
 }

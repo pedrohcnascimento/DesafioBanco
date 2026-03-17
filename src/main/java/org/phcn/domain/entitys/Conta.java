@@ -8,16 +8,18 @@ public abstract class Conta {
     String nome;
     String cpf;
     boolean status;
+    String senha;
 
 
-    public Conta(long idConta, double saldoAtual, String chavePix, String nome, String cpf, boolean status) {
+    public Conta(long idConta, double saldoAtual, double limite, String chavePix, String nome, String cpf, boolean status, String senha) {
         this.idConta = idConta;
         this.saldoAtual = saldoAtual;
-        this.limite = saldoAtual;
+        this.limite = limite;
         this.chavePix = chavePix;
         this.nome = nome;
         this.cpf = cpf;
         this.status = status;
+        this.senha = senha;
     }
 
     public Conta() {
@@ -65,6 +67,14 @@ public abstract class Conta {
 
     public String getNome() {
         return nome;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
     public void setNome(String nome) {
