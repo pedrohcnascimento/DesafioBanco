@@ -11,9 +11,9 @@ import java.util.Scanner;
 
 public class MenuPrincipal {
     Scanner scanner = new Scanner(System.in);
-    private ContaService service;
-    private ContaServiceDomain serviceDomain;
-    private Security security;
+    private final ContaService service = new ContaService();
+    private final ContaServiceDomain serviceDomain = new ContaServiceDomain();
+    private final Security security = new Security();
 
      public void MenuPrincipal(){
         int opcaoSaida;
@@ -97,11 +97,8 @@ public class MenuPrincipal {
                         System.out.println(Respostas.cpfInvalido);
                         opcaoCpf = scanner.nextLine();
                     }
-                    System.out.println(Perguntas.digiteSuaSenha);
-                    senha = scanner.nextLine();
-                    if (security.verificarInformacoes(opcaoCpf,senha)) {
-                        service.exibirInformacoesConta(opcaoCpf);
-                    }
+
+                    service.exibirInformacoesConta(opcaoCpf);
                     break;
                 case 7:
                     System.out.println("Saindo do sistema, obrigado por usar nossos serviços!");
