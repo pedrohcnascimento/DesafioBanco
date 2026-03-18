@@ -1,5 +1,7 @@
 package org.phcn.domain.entitys;
 
+import org.phcn.domain.TipoConta;
+
 public abstract class Conta {
     long idConta;
     double saldoAtual;
@@ -9,9 +11,10 @@ public abstract class Conta {
     String cpf;
     boolean status;
     String senha;
+    TipoConta tipo;
 
 
-    public Conta(long idConta, double saldoAtual, double limite, String chavePix, String nome, String cpf, boolean status, String senha) {
+    public Conta(long idConta, double saldoAtual, double limite, String chavePix, String nome, String cpf, boolean status, String senha, TipoConta tipo) {
         this.idConta = idConta;
         this.saldoAtual = saldoAtual;
         this.limite = limite;
@@ -20,6 +23,15 @@ public abstract class Conta {
         this.cpf = cpf;
         this.status = status;
         this.senha = senha;
+        this.tipo = tipo;
+    }
+
+    public TipoConta getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoConta tipo) {
+        this.tipo = tipo;
     }
 
     public Conta() {
