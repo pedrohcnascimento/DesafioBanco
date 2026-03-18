@@ -25,4 +25,20 @@ public class Perguntas {
     public static String valoraSerSacado = """
             Digite o valor a ser sacado:
             """;
+
+    public static String valoraSerTransferido = """
+            Digite o valor que deseja transferir para esta conta:
+            """;
+
+    public static String qualChavePix = """
+            Digite a chave pix da conta a qual deseja transferir:
+            """;
+
+    public static String definaSuaSenha = """
+            Defina sua senha:
+            """;
+
+    public static String digiteSuaSenha = """
+            Digite sua senha:
+            """;
 }

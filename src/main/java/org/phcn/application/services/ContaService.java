@@ -4,6 +4,7 @@ import org.phcn.domain.entitys.Conta;
 import org.phcn.domain.entitys.Corrente;
 import org.phcn.domain.entitys.Poupanca;
 import org.phcn.domain.entitys.Salario;
+import org.phcn.infrastructure.secutiry.Security;
 import org.phcn.presentation.texts.Menus;
 import org.phcn.presentation.texts.Perguntas;
 import org.phcn.presentation.texts.Respostas;
@@ -14,12 +15,12 @@ import java.util.Scanner;
 
 public class ContaService {
     static Scanner scanner = new Scanner(System.in);
-    static List<Conta> contas = new ArrayList<>();
+    public static List<Conta> contas = new ArrayList<>();
     static Conta conta;
+    private Security security;
 
 
     public void cadastrarConta(long numeroConta){
-        Menus menus = new Menus();
         System.out.println(Menus.menuTipoConta);
         int opcao = scanner.nextInt();
 
@@ -53,6 +54,9 @@ public class ContaService {
             cpf = scanner.nextLine();
         }
         conta.setCpf(cpf);
+
+        System.out.println(Perguntas.definaSuaSenha);
+        conta.setSenha(scanner.nextLine());
 
         System.out.println(Menus.menuChavePixPersonalizada);
         int opcaoPix = scanner.nextInt();
@@ -103,7 +107,7 @@ public class ContaService {
 
     public void exibirInformacoesConta(String cpfTitular){
         for (Conta conta : contas) {
-            if (conta.getCpf().equals(cpfTitular) && conta.isStatus()) {
+            if (conta.getCpf().equals(cpfTitular)) {
                 System.out.printf(Respostas.respostaExibirInformacoesConta,
                         conta.getIdConta(),
                         conta.getNome(),
@@ -120,39 +124,12 @@ public class ContaService {
 
     public void fecharConta(String cpfTitular){
         for (Conta conta : contas) {
-            if (conta.getCpf().equals(cpfTitular) && conta.isStatus()) {
+            if (conta.getCpf().equals(cpfTitular)) {
                 conta.setStatus(false);
-                System.out.println("Conta fechada com sucesso!");
+                System.out.println(Respostas.respostaFecharConta);
                 return;
             }
         }
         System.out.println(Respostas.contaNaoEncontradaOuFechada);
-    }
-
-    public void fazerDeposito(String cpfTitular){
-        for(Conta conta : contas){
-            if (conta.getCpf().equals(cpfTitular) && conta.isStatus()){
-                System.out.println(Perguntas.valoraSerDepositado);
-                double soma = scanner.nextDouble();
-                conta.setSaldoAtual(conta.getSaldoAtual()+soma);
-                conta.setLimite(conta.getSaldoAtual());
-                System.out.println(Respostas.respostaDeposito);
-            }
-        }
-    }
-
-    public void fazerSaque(String cpfTitular){
-        for (Conta conta : contas){
-            if (conta.getCpf().equals(cpfTitular) && conta.isStatus()){
-                System.out.println(Perguntas.valoraSerSacado);
-                double subtracao = scanner.nextDouble();
-                if(conta.getLimite() < subtracao){
-                    System.out.println(Respostas.limiteUltrapassado);
-                } else {
-                    conta.setSaldoAtual(conta.getSaldoAtual()-subtracao);
-                    conta.setLimite(conta.getSaldoAtual());
-                }
-            }
-        }
     }
 }
