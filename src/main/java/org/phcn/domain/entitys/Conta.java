@@ -88,4 +88,8 @@ public abstract class Conta {
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
+
+    public void desativar() {
+        this.status = false;
+    }
 }
