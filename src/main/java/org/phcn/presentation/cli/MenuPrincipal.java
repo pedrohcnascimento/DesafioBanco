@@ -1,4 +1,4 @@
-package org.phcn.presentation.controllers;
+package org.phcn.presentation.cli;
 
 import org.phcn.application.services.ContaService;
 import org.phcn.domain.services.ContaServiceDomain;

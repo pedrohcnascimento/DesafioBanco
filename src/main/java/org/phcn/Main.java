@@ -1,6 +1,6 @@
 package org.phcn;
 
-import org.phcn.presentation.controllers.MenuPrincipal;
+import org.phcn.presentation.cli.MenuPrincipal;
 
 public class Main {
     static MenuPrincipal menuPrincipal = new MenuPrincipal();
