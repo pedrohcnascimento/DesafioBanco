@@ -32,4 +32,14 @@ public class Menus {
             1- Sim
             2- Não
             """;
+
+    public static String respostaExibirInformacoesConta = """
+            Informações da conta:
+            Número da conta: %d
+            Nome do titular: %s
+            CPF do titular: %s
+            Chave pix: %s
+            Saldo atual: %.2f,
+            Limite: %.2f
+            %n""";
 }

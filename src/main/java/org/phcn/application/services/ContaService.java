@@ -94,7 +94,7 @@ public class ContaService {
         conta.setStatus(true);
 
         System.out.println(Respostas.respostaCadastroConta);
-        System.out.printf(Respostas.respostaExibirInformacoesConta,
+        System.out.printf(Menus.respostaExibirInformacoesConta,
                 conta.getIdConta(),
                 conta.getNome(),
                 conta.getCpf(),
@@ -108,7 +108,7 @@ public class ContaService {
     public void exibirInformacoesConta(String cpfTitular){
         for (Conta conta : contas) {
             if (conta.getCpf().equals(cpfTitular)) {
-                System.out.printf(Respostas.respostaExibirInformacoesConta,
+                System.out.printf(Menus.respostaExibirInformacoesConta,
                         conta.getIdConta(),
                         conta.getNome(),
                         conta.getCpf(),
