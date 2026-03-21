@@ -10,7 +10,8 @@ public class Menus {
             |       4- Fazer depósito                               |
             |       5- Fechar conta                                 |
             |       6- Exibir informações de conta                  |
-            |       7- Sair                                         |
+            |       7- Listar contas ativas                         |
+            |       8- Sair                                         |
             _________________________________________________________
             """;
 

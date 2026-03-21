@@ -3,15 +3,15 @@ package org.phcn.domain.entitys;
 import org.phcn.domain.TipoConta;
 
 public abstract class Conta {
-    long idConta;
-    double saldoAtual;
-    double limite;
-    String chavePix;
-    String nome;
-    String cpf;
-    boolean status;
-    String senha;
-    TipoConta tipo;
+    protected long idConta;
+    protected double saldoAtual;
+    protected double limite;
+    protected String chavePix;
+    protected String nome;
+    protected String cpf;
+    protected boolean status;
+    protected String senha;
+    protected TipoConta tipo;
 
 
     public Conta(long idConta, double saldoAtual, double limite, String chavePix, String nome, String cpf, boolean status, String senha, TipoConta tipo) {
@@ -104,4 +104,11 @@ public abstract class Conta {
     public void desativar() {
         this.status = false;
     }
+
+    public  void fazerDeposito(double valor){
+        saldoAtual += valor;
+        limite = saldoAtual;
+    }
+
+    public abstract void fazerSaque(double valor);
 }

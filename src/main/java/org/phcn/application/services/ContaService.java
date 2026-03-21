@@ -1,135 +1,81 @@
 package org.phcn.application.services;
 
+import org.phcn.application.dtos.ContaDto;
 import org.phcn.domain.entitys.Conta;
 import org.phcn.domain.entitys.Corrente;
 import org.phcn.domain.entitys.Poupanca;
 import org.phcn.domain.entitys.Salario;
-import org.phcn.infrastructure.secutiry.Security;
-import org.phcn.presentation.texts.Menus;
-import org.phcn.presentation.texts.Perguntas;
+import org.phcn.domain.repository.ContaRepository;
+import org.phcn.infrastructure.persistency.ContaRespositoryImpl;
 import org.phcn.presentation.texts.Respostas;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class ContaService {
     static Scanner scanner = new Scanner(System.in);
-    public static List<Conta> contas = new ArrayList<>();
-    static Conta conta;
-    private Security security;
+    private ContaRepository contaRepository = new ContaRespositoryImpl();
 
+    public void cadastrarConta(ContaDto dto ){
 
-    public void cadastrarConta(long numeroConta){
-        System.out.println(Menus.menuTipoConta);
-        int opcao = scanner.nextInt();
-
-        switch (opcao){
-            case 1:
-                System.out.println("Criando conta corrente...");
-                conta = new Corrente();
-                break;
-            case 2:
-                System.out.println("Criando conta poupança...");
-                conta = new Poupanca();
-                break;
-            case 3:
-                System.out.println("Criando conta salário...");
-                conta = new Salario();
-                break;
-            default:
-                System.out.println(Respostas.opcaoInvalida);
+        if (contaRepository.buscarPorCpf(dto.cpf()).isPresent()){
+            throw new RuntimeException("Já existe uma conta com este CPF");
         }
 
-        conta.setIdConta(numeroConta);
+        Conta conta = switch (dto.tipoConta()){
+            case CORRENTE -> new Corrente();
+            case POUPANCA -> new Poupanca();
+            case SALARIO -> new Salario();
+            default -> throw new RuntimeException(Respostas.opcaoInvalida);
+        };
 
-        System.out.println(Perguntas.preenchimentoNome);
-        scanner.nextLine();
-        conta.setNome(scanner.nextLine());
-
-        System.out.println(Perguntas.preenchimentoCpf);
-        String cpf = scanner.nextLine();
-        while (cpf.length() != 11){
-            System.out.println(Respostas.cpfInvalido);
-            cpf = scanner.nextLine();
-        }
-        conta.setCpf(cpf);
-
-        System.out.println(Perguntas.definaSuaSenha);
-        conta.setSenha(scanner.nextLine());
-
-        System.out.println(Menus.menuChavePixPersonalizada);
-        int opcaoPix = scanner.nextInt();
-        scanner.nextLine();
-        if (opcaoPix == 1){
-            System.out.println(Perguntas.preenchimentoPixPersonalizado);
-            conta.setChavePix(scanner.nextLine());
-            if (conta.getChavePix().isBlank()){
-                System.out.println(Respostas.chavePixPersonalizadaNaoDefinida);
-                conta.setChavePix(conta.getCpf());
-            }
-        } else if(opcaoPix == 2){
-            System.out.println(Respostas.chavePixPersonalizadaNaoDefinida);
-            conta.setChavePix(conta.getCpf());
-        } else {
-            System.out.println(Respostas.opcaoInvalida);
-        }
-
-        System.out.println(Menus.menuDepositoInicial);
-        int opcaoDeposito = scanner.nextInt();
-        if (opcaoDeposito == 1){
-            System.out.println(Perguntas.valoraSerDepositado);
-            conta.setSaldoAtual(scanner.nextDouble());
-            conta.setLimite(conta.getSaldoAtual());
-            if (conta.getSaldoAtual() == 0){
-                System.out.println(Respostas.depositoNaoRealizado);
-            }
-        } else if(opcaoDeposito == 2){
-            System.out.println(Respostas.depositoNaoRealizado);
-            conta.setSaldoAtual(0);
-        } else {
-            System.out.println(Respostas.opcaoInvalida);
-        }
-
+        conta.setIdConta(dto.idConta());
+        conta.setNome(dto.nome());
+        conta.setCpf(dto.cpf());
+        conta.setSenha(dto.senha());
+        conta.setChavePix(dto.chavePix());
+        conta.setSaldoAtual(dto.saldoAtual());
         conta.setStatus(true);
 
-        System.out.println(Respostas.respostaCadastroConta);
-        System.out.printf(Menus.respostaExibirInformacoesConta,
-                conta.getIdConta(),
-                conta.getNome(),
-                conta.getCpf(),
-                conta.getChavePix(),
-                conta.getSaldoAtual(),
-                conta.getLimite()
-        );
-        contas.add(conta);
+        contaRepository.salvar(conta);
     }
 
-    public void exibirInformacoesConta(String cpfTitular){
-        for (Conta conta : contas) {
-            if (conta.getCpf().equals(cpfTitular)) {
-                System.out.printf(Menus.respostaExibirInformacoesConta,
-                        conta.getIdConta(),
-                        conta.getNome(),
-                        conta.getCpf(),
-                        conta.getChavePix(),
-                        conta.getSaldoAtual(),
-                        conta.getLimite()
-                );
-                return;
-            }
-        }
-        System.out.println(Respostas.contaNaoEncontradaOuFechada);
+    public List<Conta> listarAtivos(){
+        return contaRepository.listar()
+                .stream().filter(Conta::isStatus)
+                .toList();
     }
 
-    public void fecharConta(String cpfTitular){
-        for (Conta conta : contas) {
-            if (conta.getCpf().equals(cpfTitular)) {
-                conta.setStatus(false);
-                System.out.println(Respostas.respostaFecharConta);
-                return;
-            }
-        }
-        System.out.println(Respostas.contaNaoEncontradaOuFechada);
+    public Optional<ContaDto> buscarPorCpf(String cpfTitular){
+        return contaRepository.buscarPorCpf(cpfTitular)
+                .filter(Conta::isStatus)
+                .map(ContaDto::toDto);
+    }
+
+    public Optional<ContaDto> buscarPorChavePix(String chavePix){
+        return contaRepository.buscarPorChavePix(chavePix)
+                .filter(Conta::isStatus)
+                .map(ContaDto::toDto);
+    }
+
+    public boolean fecharConta(String cpfTitular){
+        return contaRepository.buscarPorCpf(cpfTitular).map(conta1 -> {
+            conta1.setStatus(false);
+            contaRepository.salvar(conta1);
+            return true;
+        }).orElse(false);
+    }
+
+    public void fazerSaque(String cpfTitular, double valor){
+        Conta conta1 = contaRepository.buscarPorCpf(cpfTitular)
+                .orElseThrow();
+        conta1.fazerSaque(valor);
+    }
+
+    public void fazerDeposito(String cpfTitular, double valor){
+        Conta conta1 =  contaRepository.buscarPorCpf(cpfTitular)
+                .orElseThrow();
+        conta1.fazerDeposito(valor);
     }
 }

@@ -22,7 +22,7 @@ public record ContaDto(
             case Salario salario -> TipoConta.SALARIO;
             default -> throw new IllegalArgumentException("Tipo de conta não existente!");
         };
-        return new ContaDto(c.getIdConta(), c.getNome(), c.getCpf(), c.getSenha(), c.getChavePix(), c.getSaldoAtual(), c.getTipo());
+        return new ContaDto(c.getIdConta(), c.getNome(), c.getCpf(), c.getSenha(), c.getChavePix(), c.getSaldoAtual(), tipo);
     }
 
     public Conta fromDto(){
