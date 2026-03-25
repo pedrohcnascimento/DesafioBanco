@@ -4,6 +4,7 @@ import org.phcn.application.dtos.ContaDto;
 import org.phcn.application.services.ContaService;
 import org.phcn.domain.TipoConta;
 import org.phcn.domain.entitys.Conta;
+import org.phcn.domain.entitys.Corrente;
 import org.phcn.domain.repository.ContaRepository;
 import org.phcn.domain.services.ContaServiceDomain;
 import org.phcn.infrastructure.persistency.ContaRespositoryImpl;
@@ -30,7 +31,7 @@ public class MenuPrincipal {
         String senha;
         String chavePix;
         double depositoInicial;
-        String tipo;
+        String tipo = "";
 
         do {
             System.out.println(Menus.menuPrincipal);
@@ -57,6 +58,7 @@ public class MenuPrincipal {
                         default:
                             System.out.println(Respostas.opcaoInvalida);
                     }
+                    scanner.nextLine();
 
                     System.out.println(Perguntas.preenchimentoNome);
                     String nome =  scanner.nextLine();
@@ -99,9 +101,7 @@ public class MenuPrincipal {
                         depositoInicial=0;
                     }
 
-                   // service.cadastrarConta(new ContaDto(numeroConta,nome, cpf, senha,chavePix,depositoInicial,
-
-                     //       ));
+                    service.cadastrarConta(new ContaDto(numeroConta,nome, cpf, senha,chavePix,depositoInicial,tipo));
                     numeroConta++;
                     break;
                 case 2:
@@ -114,9 +114,9 @@ public class MenuPrincipal {
                     }
                     System.out.println(Perguntas.digiteSuaSenha);
                     senha = scanner.nextLine();
-//                    if (security.verificarInformacoes(opcaoCpf,senha)){
-//                        serviceDomain.fazerTrasnferencia(opcaoCpf);
-//                    }
+                    if (security.verificarInformacoes(opcaoCpf,senha)){
+//                        service.fazerTrasferencia(opcaoCpf);
+                    }
                     break;
                 case 3:
                     System.out.println(Perguntas.cpfNecessario);
@@ -129,9 +129,11 @@ public class MenuPrincipal {
 
                     System.out.println(Perguntas.digiteSuaSenha);
                     senha = scanner.nextLine();
-//                    if (security.verificarInformacoes(opcaoCpf,senha)) {
-//                        serviceDomain.fazerSaque(opcaoCpf);
-//                    }
+                    if (security.verificarInformacoes(opcaoCpf,senha)) {
+                        System.out.println(Perguntas.valoraSerSacado);
+                        double valor = scanner.nextDouble();
+                        service.fazerSaque(opcaoCpf,valor);
+                    }
                     break;
                 case 4:
                     System.out.println(Perguntas.cpfNecessario);
@@ -144,9 +146,11 @@ public class MenuPrincipal {
 
                     System.out.println(Perguntas.digiteSuaSenha);
                     senha = scanner.nextLine();
-//                    if (security.verificarInformacoes(opcaoCpf,senha)) {
-//                        serviceDomain.fazerDeposito(opcaoCpf);
-//                    }
+                    if (security.verificarInformacoes(opcaoCpf,senha)) {
+                        System.out.println(Perguntas.valoraSerDepositado);
+                        double valor = scanner.nextDouble();
+                        service.fazerDeposito(opcaoCpf, valor);
+                    }
                     break;
                 case 5:
                     System.out.println(Perguntas.cpfNecessario);
@@ -158,9 +162,9 @@ public class MenuPrincipal {
                     }
                     System.out.println(Perguntas.digiteSuaSenha);
                     senha = scanner.nextLine();
-//                    if (security.verificarInformacoes(opcaoCpf,senha)) {
-//                        service.fecharConta(opcaoCpf);
-//                    }
+                    if (security.verificarInformacoes(opcaoCpf,senha)) {
+                        service.fecharConta(opcaoCpf);
+                    }
                     service.fecharConta(opcaoCpf);
                     break;
                 case 6:

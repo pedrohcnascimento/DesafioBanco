@@ -24,9 +24,9 @@ public class ContaService {
         }
 
         Conta conta = switch (dto.tipoConta()){
-            case CORRENTE -> new Corrente();
-            case POUPANCA -> new Poupanca();
-            case SALARIO -> new Salario();
+            case "CORRENTE" -> new Corrente();
+            case "POUPANCA" -> new Poupanca();
+            case "SALARIO" -> new Salario();
             default -> throw new RuntimeException(Respostas.opcaoInvalida);
         };
 
@@ -36,6 +36,7 @@ public class ContaService {
         conta.setSenha(dto.senha());
         conta.setChavePix(dto.chavePix());
         conta.setSaldoAtual(dto.saldoAtual());
+        conta.setLimite(dto.saldoAtual());
         conta.setStatus(true);
 
         contaRepository.salvar(conta);

@@ -8,9 +8,9 @@ import org.phcn.presentation.cli.MenuPrincipal;
 public class Main {
     public static void main(String[] args) {
         ContaRepository repo = new ContaRespositoryImpl();
-        //ContaService service = new ContaService(repo);
+        ContaService service = new ContaService();
 
-        //MenuPrincipal menu = new MenuPrincipal(service);
-        //menu.MenuPrincipal();
+        MenuPrincipal menu = new MenuPrincipal();
+        menu.MenuPrincipal();
     }
 }

@@ -13,7 +13,7 @@ public record ContaDto(
         String senha,
         String chavePix,
         double saldoAtual,
-        TipoConta tipoConta
+        String tipoConta
 ) {
     public static ContaDto toDto(Conta c){
         TipoConta tipo = switch (c){
@@ -22,14 +22,15 @@ public record ContaDto(
             case Salario salario -> TipoConta.SALARIO;
             default -> throw new IllegalArgumentException("Tipo de conta não existente!");
         };
-        return new ContaDto(c.getIdConta(), c.getNome(), c.getCpf(), c.getSenha(), c.getChavePix(), c.getSaldoAtual(), tipo);
+        return new ContaDto(c.getIdConta(), c.getNome(), c.getCpf(), c.getSenha(), c.getChavePix(), c.getSaldoAtual(), tipo.toString());
     }
 
     public Conta fromDto(){
         Conta conta = switch (tipoConta){
-            case SALARIO -> new Salario();
-            case CORRENTE -> new Corrente();
-            case POUPANCA -> new Poupanca();
+            case "SALARIO" -> new Salario();
+            case "CORRENTE" -> new Corrente();
+            case "POUPANCA" -> new Poupanca();
+            default -> throw new IllegalStateException("Tipo de conta não exitente!" + tipoConta);
         };
         conta.setIdConta(idConta);
         conta.setNome(nome);
