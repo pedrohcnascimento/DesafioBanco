@@ -5,9 +5,12 @@ import org.phcn.presentation.texts.Respostas;
 
 public class Poupanca extends Conta{
     public Poupanca(long idConta, String nome, String cpf, String chavePix, double saldoAtual, double limite, boolean status, String senha, TipoConta tipo) {
+        super(idConta,nome,cpf,chavePix,saldoAtual,limite,status,senha, tipo);
     }
 
     public Poupanca() {
+        super();
+        this.tipo = TipoConta.POUPANCA;
     }
 
     @Override
@@ -23,5 +26,9 @@ public class Poupanca extends Conta{
             System.out.println(Respostas.limiteUltrapassado);
             return false;
         }
+    }
+    @Override
+    public String toJson(){
+        return super.toJson();
     }
 }

@@ -5,9 +5,12 @@ import org.phcn.presentation.texts.Respostas;
 
 public class Corrente extends Conta{
     public Corrente(long idConta, String nome, String cpf, String chavePix, double saldoAtual, double limite, boolean status, String senha, TipoConta tipo) {
+        super(idConta,nome,cpf,chavePix,saldoAtual,limite,status,senha, tipo);
     }
 
     public Corrente() {
+        super();
+        this.tipo = TipoConta.CORRENTE;
     }
 
     @Override
@@ -20,5 +23,10 @@ public class Corrente extends Conta{
             System.out.println(Respostas.limiteUltrapassado);
             return false;
         }
+    }
+
+    @Override
+    public String toJson(){
+        return super.toJson();
     }
 }
