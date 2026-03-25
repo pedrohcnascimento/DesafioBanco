@@ -1,0 +1,3 @@
+[{"idConta":1, "nome":"pedro", "cpf":"12345678901", "senha":"senha123", "chavePix":"12345678901", "saldoAtual":0,00, "tipo":"CORRENTE", "status":"true"},
+{"idConta":2, "nome":"09876543210", "cpf":"09876543210", "senha":"senha123", "chavePix":"09876543210", "saldoAtual":0,00, "tipo":"POUPANCA", "status":"true"},
+{"idConta":3, "nome":"asdas", "cpf":"56789054321", "senha":"senha123", "chavePix":"56789054321", "saldoAtual":0,00, "tipo":"SALARIO", "status":"true"}]
