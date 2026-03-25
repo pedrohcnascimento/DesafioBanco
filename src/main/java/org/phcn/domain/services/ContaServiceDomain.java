@@ -33,18 +33,21 @@ public class ContaServiceDomain {
         Conta contaOrigem = contaOrigemOpt.get();
 
         if (!(contaOrigem instanceof Poupanca)){
-            if (contaOrigem.fazerSaque(valor)){
-                contaDestino.fazerDeposito(valor);
+            if (!contaOrigem.getChavePix().equals(chavePix)){
+                if (contaOrigem.fazerSaque(valor)){
+                    contaDestino.fazerDeposito(valor);
 
-                contaDestino.setLimite(contaDestino.getSaldoAtual());
-                contaOrigem.setLimite(contaOrigem.getSaldoAtual());
+                    contaDestino.setLimite(contaDestino.getSaldoAtual());
+                    contaOrigem.setLimite(contaOrigem.getSaldoAtual());
 
-                contaRepository.salvar(contaOrigem);
-                contaRepository.salvar(contaDestino);
-                System.out.println(Respostas.respostaTransferencia);
+                    contaRepository.salvar(contaOrigem);
+                    contaRepository.salvar(contaDestino);
+                    System.out.println(Respostas.respostaTransferencia);
+                }else {
+                    System.out.println("Transferencia fracassada!");
+                }
             }else {
-                System.out.println("Transferencia fracassada!");
-                return;
+                System.out.println("Você não pode transferir pra você mesmo, seu safado!");
             }
         }else {
             System.out.println("Transferencias não são permitidas em contas poupança.");
