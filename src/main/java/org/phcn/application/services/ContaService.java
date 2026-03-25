@@ -1,12 +1,12 @@
 package org.phcn.application.services;
 
 import org.phcn.application.dtos.ContaDto;
+import org.phcn.domain.TipoConta;
 import org.phcn.domain.entitys.Conta;
 import org.phcn.domain.entitys.Corrente;
 import org.phcn.domain.entitys.Poupanca;
 import org.phcn.domain.entitys.Salario;
 import org.phcn.domain.repository.ContaRepository;
-import org.phcn.presentation.texts.Respostas;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,24 +23,26 @@ public class ContaService {
         if (contaRepository.buscarPorCpf(dto.cpf()).isPresent()){
             throw new RuntimeException("Já existe uma conta com este CPF");
         }
+        Conta contaNova;
+        TipoConta tipo = TipoConta.valueOf(dto.tipoConta());
 
-        Conta conta = switch (dto.tipoConta()){
-            case "CORRENTE" -> new Corrente();
-            case "POUPANCA" -> new Poupanca();
-            case "SALARIO" -> new Salario();
-            default -> throw new RuntimeException(Respostas.opcaoInvalida);
-        };
+        switch (tipo){
+            case CORRENTE :
+                contaNova = new Corrente(dto.idConta(),dto.nome(), dto.cpf(), dto.chavePix(), dto.saldoAtual(), dto.saldoAtual(), true, dto.senha(), tipo);
+                break;
+            case POUPANCA:
+                contaNova = new Poupanca(dto.idConta(),dto.nome(), dto.cpf(), dto.chavePix(), dto.saldoAtual(), dto.saldoAtual(), true, dto.senha(), tipo);
+                break;
+            case SALARIO:
+                contaNova = new Salario(dto.idConta(),dto.nome(), dto.cpf(), dto.chavePix(), dto.saldoAtual(), dto.saldoAtual(), true, dto.senha(), tipo);
+                break;
+            default:
+                System.err.println("Tipo de conta inválido");
+                return;
+        }
 
-        conta.setIdConta(dto.idConta());
-        conta.setNome(dto.nome());
-        conta.setCpf(dto.cpf());
-        conta.setSenha(dto.senha());
-        conta.setChavePix(dto.chavePix());
-        conta.setSaldoAtual(dto.saldoAtual());
-        conta.setLimite(dto.saldoAtual());
-        conta.setStatus(true);
-
-        contaRepository.salvar(conta);
+        contaRepository.salvar(contaNova);
+        buscarPorCpf(contaNova.getCpf());
     }
 
     public List<Conta> listarAtivos(){

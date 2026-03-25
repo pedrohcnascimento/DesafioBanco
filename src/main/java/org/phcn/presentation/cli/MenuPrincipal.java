@@ -32,7 +32,6 @@ public class MenuPrincipal {
 
      public void MenuPrincipal(){
         int opcaoSaida;
-        long numeroConta = 1;
         String opcaoCpf;
         String senha;
         String chavePix;
@@ -63,6 +62,7 @@ public class MenuPrincipal {
                             break;
                         default:
                             System.out.println(Respostas.opcaoInvalida);
+                            continue;
                     }
                     scanner.nextLine();
 
@@ -106,9 +106,9 @@ public class MenuPrincipal {
                         System.out.println(Respostas.opcaoInvalida);
                         depositoInicial=0;
                     }
+                    scanner.nextLine();
 
-                    service.cadastrarConta(new ContaDto(numeroConta,nome, cpf, senha,chavePix,depositoInicial,tipo));
-                    numeroConta++;
+                    service.cadastrarConta(new ContaDto(0,nome, cpf, senha,chavePix,depositoInicial,tipo));
                     break;
                 case 2:
                     System.out.println(Perguntas.cpfNecessario);
