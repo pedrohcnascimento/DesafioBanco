@@ -1,48 +1,53 @@
 package org.phcn.domain.services;
 
 import org.phcn.domain.entitys.Conta;
-import org.phcn.presentation.texts.Perguntas;
+import org.phcn.domain.entitys.Poupanca;
+import org.phcn.domain.repository.ContaRepository;
 import org.phcn.presentation.texts.Respostas;
 
-import java.util.Scanner;
-
-
+import java.util.Optional;
 
 public class ContaServiceDomain {
-    Scanner scanner = new Scanner(System.in);
+    private final ContaRepository contaRepository;
 
-//    public void fazerTrasnferencia(String cpfTitular){
-//        for (Conta conta : contas){
-//            if (conta.getCpf().equals(cpfTitular)){
-//                System.out.println(Perguntas.qualChavePix);
-//                String chavePix =scanner.nextLine();
-//                for (Conta contaTransferencia : contas){
-//                    if (contaTransferencia.getChavePix().equals(chavePix) && contaTransferencia.isStatus()){
-//                        if (conta.getChavePix().equals(contaTransferencia.getChavePix())){
-//                            System.out.println("Você não pode transferir dinheiro para a própria conta!\nSeu pilantra ;)");
-//                            return;
-//                        }
-//                        System.out.println(Perguntas.valoraSerTransferido);
-//                        double valorTransferido = scanner.nextDouble();
-//                        if (conta.getLimite() > valorTransferido){
-//                            conta.setSaldoAtual(conta.getSaldoAtual()-valorTransferido);
-//                            conta.setLimite(conta.getSaldoAtual());
-//                            contaTransferencia.setSaldoAtual(contaTransferencia.getSaldoAtual()+valorTransferido);
-//                            contaTransferencia.setLimite(contaTransferencia.getSaldoAtual());
-//                            System.out.println(Respostas.respostaTransferencia);
-//                        } else {
-//                            System.out.println(Respostas.limiteUltrapassado);
-//                        }
-//                    }else {
-//                        if (contas.size() == contaTransferencia.getIdConta()){
-//                            System.out.println(Respostas.contaNaoEncontradaOuFechada);
-//                        }else {
-//                            System.out.println("Procurando...");
-//                        }
-//                    }
-//                }
-//            }
-//        }
+    public ContaServiceDomain(ContaRepository contaRepository){
+        this.contaRepository = contaRepository;
+    }
 
-//    }
+    public void fazerTrasnferencia(String cpfTitular, String chavePix, double valor){
+        Optional<Conta> contaDestinoOpt = contaRepository.buscarPorChavePix(chavePix);
+        Optional<Conta> contaOrigemOpt = contaRepository.buscarPorCpf(cpfTitular);
+
+
+        if (contaDestinoOpt.isEmpty()){
+            System.out.println(Respostas.contaNaoEncontradaOuFechada);
+            return;
+        }
+
+        if (contaOrigemOpt.isEmpty()){
+            System.out.println(Respostas.contaNaoEncontradaOuFechada);
+            return;
+        }
+
+        Conta contaDestino = contaDestinoOpt.get();
+        Conta contaOrigem = contaOrigemOpt.get();
+
+        if (!(contaOrigem instanceof Poupanca)){
+            if (contaOrigem.fazerSaque(valor)){
+                contaDestino.fazerDeposito(valor);
+
+                contaDestino.setLimite(contaDestino.getSaldoAtual());
+                contaOrigem.setLimite(contaOrigem.getSaldoAtual());
+
+                contaRepository.salvar(contaOrigem);
+                contaRepository.salvar(contaDestino);
+                System.out.println(Respostas.respostaTransferencia);
+            }else {
+                System.out.println("Transferencia fracassada!");
+                return;
+            }
+        }else {
+            System.out.println("Transferencias não são permitidas em contas poupança.");
+        }
+    }
 }

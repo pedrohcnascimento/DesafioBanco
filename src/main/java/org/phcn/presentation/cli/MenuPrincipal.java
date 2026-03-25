@@ -22,10 +22,12 @@ public class MenuPrincipal {
     Scanner scanner = new Scanner(System.in);
     private final ContaService service;
     private final Security security;
+    private final ContaServiceDomain serviceDomain;
 
-    public MenuPrincipal(ContaService contaService, Security security) {
+    public MenuPrincipal(ContaService contaService, Security security, ContaServiceDomain serviceDomain) {
         this.service = contaService;
         this.security = security;
+        this.serviceDomain = serviceDomain;
     }
 
      public void MenuPrincipal(){
@@ -119,7 +121,13 @@ public class MenuPrincipal {
                     System.out.println(Perguntas.digiteSuaSenha);
                     senha = scanner.nextLine();
                     if (security.verificarInformacoes(opcaoCpf,senha)){
-//                        service.fazerTrasferencia(opcaoCpf);
+                        System.out.println("Digite a chave pix da conta que deseja transferir:");
+                        String chavePixTransferencia = scanner.nextLine();
+
+                        System.out.println(Perguntas.valoraSerTransferido);
+                        double valor = scanner.nextDouble();
+                        scanner.nextLine();
+                        serviceDomain.fazerTrasnferencia(opcaoCpf, chavePixTransferencia, valor);
                     } else {
                         System.out.println(Respostas.senhaIncorreta);
                     }

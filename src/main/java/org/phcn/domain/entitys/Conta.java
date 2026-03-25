@@ -110,5 +110,5 @@ public abstract class Conta {
         limite = saldoAtual;
     }
 
-    public abstract void fazerSaque(double valor);
+    public abstract boolean fazerSaque(double valor);
 }
