@@ -1,7 +1,6 @@
 package org.phcn.application.services;
 
 import org.phcn.application.dtos.ContaDto;
-import org.phcn.domain.TipoConta;
 import org.phcn.domain.entitys.Conta;
 import org.phcn.domain.entitys.Corrente;
 import org.phcn.domain.entitys.Poupanca;
