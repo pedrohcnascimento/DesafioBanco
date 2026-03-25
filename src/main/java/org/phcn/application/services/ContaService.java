@@ -1,6 +1,7 @@
 package org.phcn.application.services;
 
 import org.phcn.application.dtos.ContaDto;
+import org.phcn.domain.TipoConta;
 import org.phcn.domain.entitys.Conta;
 import org.phcn.domain.entitys.Corrente;
 import org.phcn.domain.entitys.Poupanca;
@@ -55,11 +56,6 @@ public class ContaService {
                 .map(ContaDto::toDto);
     }
 
-    public Optional<ContaDto> buscarPorChavePix(String chavePix){
-        return contaRepository.buscarPorChavePix(chavePix)
-                .filter(Conta::isStatus)
-                .map(ContaDto::toDto);
-    }
 
     public boolean fecharConta(String cpfTitular){
         return contaRepository.buscarPorCpf(cpfTitular).map(conta1 -> {
@@ -70,14 +66,14 @@ public class ContaService {
     }
 
     public void fazerSaque(String cpfTitular, double valor){
-        Conta conta1 = contaRepository.buscarPorCpf(cpfTitular)
+        Conta conta = contaRepository.buscarPorCpf(cpfTitular)
                 .orElseThrow();
-        conta1.fazerSaque(valor);
+        conta.fazerSaque(valor);
     }
 
     public void fazerDeposito(String cpfTitular, double valor){
-        Conta conta1 =  contaRepository.buscarPorCpf(cpfTitular)
+        Conta conta =  contaRepository.buscarPorCpf(cpfTitular)
                 .orElseThrow();
-        conta1.fazerDeposito(valor);
+        conta.fazerDeposito(valor);
     }
 }
