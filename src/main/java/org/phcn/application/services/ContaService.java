@@ -6,16 +6,17 @@ import org.phcn.domain.entitys.Corrente;
 import org.phcn.domain.entitys.Poupanca;
 import org.phcn.domain.entitys.Salario;
 import org.phcn.domain.repository.ContaRepository;
-import org.phcn.infrastructure.persistency.ContaRespositoryImpl;
 import org.phcn.presentation.texts.Respostas;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Scanner;
 
 public class ContaService {
-    static Scanner scanner = new Scanner(System.in);
-    private ContaRepository contaRepository = new ContaRespositoryImpl();
+    private final ContaRepository contaRepository;
+
+    public ContaService(ContaRepository contaRepository){
+        this.contaRepository = contaRepository;
+    }
 
     public void cadastrarConta(ContaDto dto ){
 

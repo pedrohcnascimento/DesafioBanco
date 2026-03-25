@@ -20,9 +20,13 @@ import java.util.Scanner;
 
 public class MenuPrincipal {
     Scanner scanner = new Scanner(System.in);
-    private final ContaService service= new ContaService();
-    private final ContaServiceDomain serviceDomain = new ContaServiceDomain();
-    private final Security security = new Security();
+    private final ContaService service;
+    private final Security security;
+
+    public MenuPrincipal(ContaService contaService, Security security) {
+        this.service = contaService;
+        this.security = security;
+    }
 
      public void MenuPrincipal(){
         int opcaoSaida;
@@ -116,6 +120,8 @@ public class MenuPrincipal {
                     senha = scanner.nextLine();
                     if (security.verificarInformacoes(opcaoCpf,senha)){
 //                        service.fazerTrasferencia(opcaoCpf);
+                    } else {
+                        System.out.println(Respostas.senhaIncorreta);
                     }
                     break;
                 case 3:
@@ -133,6 +139,8 @@ public class MenuPrincipal {
                         System.out.println(Perguntas.valoraSerSacado);
                         double valor = scanner.nextDouble();
                         service.fazerSaque(opcaoCpf,valor);
+                    } else {
+                        System.out.println(Respostas.senhaIncorreta);
                     }
                     break;
                 case 4:
@@ -150,6 +158,8 @@ public class MenuPrincipal {
                         System.out.println(Perguntas.valoraSerDepositado);
                         double valor = scanner.nextDouble();
                         service.fazerDeposito(opcaoCpf, valor);
+                    }else {
+                        System.out.println(Respostas.senhaIncorreta);
                     }
                     break;
                 case 5:
@@ -164,6 +174,8 @@ public class MenuPrincipal {
                     senha = scanner.nextLine();
                     if (security.verificarInformacoes(opcaoCpf,senha)) {
                         service.fecharConta(opcaoCpf);
+                    } else {
+                        System.out.println(Respostas.senhaIncorreta);
                     }
                     service.fecharConta(opcaoCpf);
                     break;

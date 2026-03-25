@@ -44,4 +44,8 @@ public class Respostas {
     public static String limiteUltrapassado = """
             Você não possui dinheiro o suficiente em sua conta para realizar esta ação!
             """;
+
+    public static String senhaIncorreta = """
+            Senha incorreta!
+            """;
 }
