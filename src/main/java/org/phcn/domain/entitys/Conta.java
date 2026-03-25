@@ -114,9 +114,10 @@ public abstract class Conta {
     public abstract boolean fazerSaque(double valor);
 
     public String toJson() {
+        String nomeTipo = (tipo != null) ? tipo.name() : "UNKNOWN";
         return String.format(
                 "{\"idConta\":%d, \"nome\":\"%s\", \"cpf\":\"%s\", \"senha\":\"%s\", \"chavePix\":\"%s\", \"saldoAtual\":%.2f, \"tipo\":\"%s\", \"status\":\"%b\"}",
-                idConta, nome, cpf, senha, chavePix, saldoAtual, tipo.name(), status
+                idConta, nome, cpf, senha, chavePix, saldoAtual, nomeTipo, status
         );
     }
 
