@@ -24,7 +24,6 @@ public record ContaDto(
         };
         return new ContaDto(c.getIdConta(), c.getNome(), c.getCpf(), c.getSenha(), c.getChavePix(), c.getSaldoAtual(), tipo.toString());
     }
-
     public Conta fromDto(){
         Conta conta = switch (tipoConta){
             case "SALARIO" -> new Salario();
@@ -39,7 +38,6 @@ public record ContaDto(
         conta.setChavePix(chavePix);
         conta.setSaldoAtual(saldoAtual);
         conta.setStatus(true);
-
         return conta;
     }
 }

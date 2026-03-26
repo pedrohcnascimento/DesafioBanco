@@ -7,12 +7,10 @@ public class Poupanca extends Conta{
     public Poupanca(long idConta, String nome, String cpf, String chavePix, double saldoAtual, double limite, boolean status, String senha, TipoConta tipo) {
         super(idConta,nome,cpf,chavePix,saldoAtual,limite,status,senha, tipo);
     }
-
     public Poupanca() {
         super();
         this.tipo = TipoConta.POUPANCA;
     }
-
     @Override
     public boolean fazerSaque(double valor) {
         if (saldoAtual == valor) {

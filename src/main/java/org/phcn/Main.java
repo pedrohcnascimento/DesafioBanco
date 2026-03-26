@@ -13,7 +13,6 @@ public class Main {
         Security security = new Security(repo);
         ContaService service = new ContaService(repo);
         ContaServiceDomain serviceDomain = new ContaServiceDomain(repo);
-
         MenuPrincipal menu = new MenuPrincipal(service, security, serviceDomain);
         menu.MenuPrincipal();
     }

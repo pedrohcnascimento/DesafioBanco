@@ -22,33 +22,27 @@ public class ContaRespositoryImpl implements ContaRepository {
         this.proximoIdConta = 1L;
         carregarContas();
     }
-
     private void carregarContas(){
         Path path = Paths.get(PATH);
         if (Files.exists(path)){
             try {
                 String conteudoJson = Files.readString(path);
-
                 if (conteudoJson.trim().isEmpty() || conteudoJson.equals("[]")){
                     this.contas = new ArrayList<>();
                     this.proximoIdConta = 1L;
                     return;
                 }
-
                 String jsonInterno = conteudoJson.substring(1, conteudoJson.length() -1);
                 String[] listaClassesJson = jsonInterno.split("}(,)\\s*\\{?");
-
                 for (String classeJson: listaClassesJson){
                     if (!classeJson.trim().isEmpty()){
                         String classeCompletaJson = classeJson.trim();
-
                         if (!classeCompletaJson.startsWith("{")){
                             classeCompletaJson = "{" + classeCompletaJson;
                         }
                         if (!classeCompletaJson.endsWith("}")){
                             classeCompletaJson = classeCompletaJson + "}";
                         }
-
                         try {
                             Conta conta = Conta.fromJson(classeCompletaJson);
                             if (conta != null){
@@ -67,10 +61,8 @@ public class ContaRespositoryImpl implements ContaRepository {
             }
         }
     }
-
     private void salvarContas(){
         Path path = Paths.get(PATH);
-
         try {
             String conteudoJson = "["+
                 contas.stream()
@@ -88,7 +80,6 @@ public class ContaRespositoryImpl implements ContaRepository {
         Optional<Conta> existingConta = contas.stream()
                 .filter(c -> c.getCpf().equals(conta.getCpf()))
                 .findFirst();
-
         if (existingConta.isPresent()) {
             Conta c = existingConta.get();
             c.setNome(conta.getNome());
@@ -102,12 +93,10 @@ public class ContaRespositoryImpl implements ContaRepository {
         }
         salvarContas();
     }
-
     @Override
     public List<Conta> listar(){
         return new ArrayList<>(contas);
     }
-
     @Override
     public Optional<Conta> buscarPorCpf(String cpfTitular){
         return contas.stream()
@@ -115,7 +104,6 @@ public class ContaRespositoryImpl implements ContaRepository {
                 .filter(Conta::isStatus)
                 .findFirst();
     }
-
     @Override
     public Optional<Conta> buscarPorChavePix(String chavePix){
         return contas.stream()
@@ -123,11 +111,9 @@ public class ContaRespositoryImpl implements ContaRepository {
                 .filter(Conta::isStatus)
                 .findFirst();
     }
-
     @Override
     public Optional<Conta> fecharConta(String cpfTitular){
         Optional<Conta> contaOpt = buscarPorCpf(cpfTitular);
-
         contaOpt.ifPresent(conta -> {
             conta.desativar();
             salvar(conta);

@@ -17,15 +17,12 @@ public class ContaService {
     public ContaService(ContaRepository contaRepository){
         this.contaRepository = contaRepository;
     }
-
     public void cadastrarConta(ContaDto dto ){
-
         if (contaRepository.buscarPorCpf(dto.cpf()).isPresent()){
             throw new RuntimeException("Já existe uma conta com este CPF");
         }
         Conta contaNova;
         TipoConta tipo = TipoConta.valueOf(dto.tipoConta());
-
         switch (tipo){
             case CORRENTE :
                 contaNova = new Corrente(dto.idConta(),dto.nome(), dto.cpf(), dto.chavePix(), dto.saldoAtual(), dto.saldoAtual(), true, dto.senha(), tipo);
@@ -40,7 +37,6 @@ public class ContaService {
                 System.err.println("Tipo de conta inválido");
                 return;
         }
-
         contaRepository.salvar(contaNova);
         buscarPorCpf(contaNova.getCpf());
     }
@@ -56,8 +52,6 @@ public class ContaService {
                 .filter(Conta::isStatus)
                 .map(ContaDto::toDto);
     }
-
-
     public boolean fecharConta(String cpfTitular){
         return contaRepository.buscarPorCpf(cpfTitular).map(conta1 -> {
             conta1.setStatus(false);
@@ -65,13 +59,11 @@ public class ContaService {
             return true;
         }).orElse(false);
     }
-
     public void fazerSaque(String cpfTitular, double valor){
         Conta conta = contaRepository.buscarPorCpf(cpfTitular)
                 .orElseThrow();
         conta.fazerSaque(valor);
     }
-
     public void fazerDeposito(String cpfTitular, double valor){
         Conta conta =  contaRepository.buscarPorCpf(cpfTitular)
                 .orElseThrow();

@@ -7,12 +7,10 @@ public class Salario extends Conta{
     public Salario(long idConta, String nome, String cpf, String chavePix, double saldoAtual, double limite, boolean status, String senha, TipoConta tipo) {
         super(idConta,nome,cpf,chavePix,saldoAtual,limite,status,senha, tipo);
     }
-
     public Salario() {
         super();
         this.tipo = TipoConta.SALARIO;
     }
-
     @Override
     public boolean fazerSaque(double valor) {
         if (saldoAtual >= valor) {

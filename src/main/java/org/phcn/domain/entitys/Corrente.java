@@ -7,12 +7,10 @@ public class Corrente extends Conta{
     public Corrente(long idConta, String nome, String cpf, String chavePix, double saldoAtual, double limite, boolean status, String senha, TipoConta tipo) {
         super(idConta,nome,cpf,chavePix,saldoAtual,limite,status,senha, tipo);
     }
-
     public Corrente() {
         super();
         this.tipo = TipoConta.CORRENTE;
     }
-
     @Override
     public boolean fazerSaque(double valor) {
         if (saldoAtual + limite >= valor) {
@@ -24,7 +22,6 @@ public class Corrente extends Conta{
             return false;
         }
     }
-
     @Override
     public String toJson(){
         return super.toJson();

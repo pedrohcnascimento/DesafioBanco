@@ -11,5 +11,4 @@ public interface ContaRepository {
     Optional<Conta> buscarPorCpf(String cpfTitular);
     Optional<Conta> buscarPorChavePix(String chavePix);
     Optional<Conta> fecharConta(String cpfTitular);
-
 }

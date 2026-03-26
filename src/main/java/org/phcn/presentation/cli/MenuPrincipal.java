@@ -36,13 +36,12 @@ public class MenuPrincipal {
         String senha;
         String chavePix;
         double depositoInicial;
-        String tipo = "";
+        String tipo;
 
         do {
             System.out.println(Menus.menuPrincipal);
             opcaoSaida = scanner.nextInt();
             scanner.nextLine();
-
             switch (opcaoSaida){
                 case 1:
                     System.out.println(Menus.menuTipoConta);
@@ -65,23 +64,18 @@ public class MenuPrincipal {
                             continue;
                     }
                     scanner.nextLine();
-
                     System.out.println(Perguntas.preenchimentoNome);
                     String nome =  scanner.nextLine();
-
                     System.out.println(Perguntas.preenchimentoCpf);
                     String cpf = scanner.nextLine();
                     while (cpf.length() != 11){
                         System.out.println(Respostas.cpfInvalido);
                         cpf = scanner.nextLine();
                     }
-
                     System.out.println(Perguntas.definaSuaSenha);
                     senha = scanner.nextLine();
-
                     System.out.println(Menus.menuChavePixPersonalizada);
                     int opcaoPix = scanner.nextInt();
-
                     scanner.nextLine();
                     if (opcaoPix == 1){
                         System.out.println(Perguntas.preenchimentoPixPersonalizado);
@@ -93,7 +87,6 @@ public class MenuPrincipal {
                         System.out.println(Respostas.opcaoInvalida);
                         chavePix = cpf;
                     }
-
                     System.out.println(Menus.menuDepositoInicial);
                     int opcaoDeposito = scanner.nextInt();
                     if (opcaoDeposito == 1){
@@ -107,13 +100,11 @@ public class MenuPrincipal {
                         depositoInicial=0;
                     }
                     scanner.nextLine();
-
                     service.cadastrarConta(new ContaDto(0,nome, cpf, senha,chavePix,depositoInicial,tipo));
                     break;
                 case 2:
                     System.out.println(Perguntas.cpfNecessario);
                     opcaoCpf = scanner.nextLine();
-
                     while (opcaoCpf.length() !=11){
                         System.out.println(Respostas.cpfInvalido);
                         opcaoCpf = scanner.nextLine();
@@ -123,7 +114,6 @@ public class MenuPrincipal {
                     if (security.verificarInformacoes(opcaoCpf,senha)){
                         System.out.println("Digite a chave pix da conta que deseja transferir:");
                         String chavePixTransferencia = scanner.nextLine();
-
                         System.out.println(Perguntas.valoraSerTransferido);
                         double valor = scanner.nextDouble();
                         scanner.nextLine();
@@ -135,12 +125,10 @@ public class MenuPrincipal {
                 case 3:
                     System.out.println(Perguntas.cpfNecessario);
                     opcaoCpf = scanner.nextLine();
-
                     while (opcaoCpf.length() != 11){
                         System.out.println(Respostas.cpfInvalido);
                         opcaoCpf = scanner.nextLine();
                     }
-
                     System.out.println(Perguntas.digiteSuaSenha);
                     senha = scanner.nextLine();
                     if (security.verificarInformacoes(opcaoCpf,senha)) {
@@ -154,12 +142,10 @@ public class MenuPrincipal {
                 case 4:
                     System.out.println(Perguntas.cpfNecessario);
                     opcaoCpf = scanner.nextLine();
-
                     while(opcaoCpf.length() != 11){
                         System.out.println(Respostas.cpfInvalido);
                         opcaoCpf = scanner.nextLine();
                     }
-
                     System.out.println(Perguntas.digiteSuaSenha);
                     senha = scanner.nextLine();
                     if (security.verificarInformacoes(opcaoCpf,senha)) {
@@ -173,7 +159,6 @@ public class MenuPrincipal {
                 case 5:
                     System.out.println(Perguntas.cpfNecessario);
                     opcaoCpf = scanner.nextLine();
-
                     while (opcaoCpf.length() != 11){
                         System.out.println(Respostas.cpfInvalido);
                         opcaoCpf = scanner.nextLine();
@@ -190,12 +175,10 @@ public class MenuPrincipal {
                 case 6:
                     System.out.println(Perguntas.cpfNecessario);
                     opcaoCpf = scanner.nextLine();
-
                     while (opcaoCpf.length() != 11){
                         System.out.println(Respostas.cpfInvalido);
                         opcaoCpf = scanner.nextLine();
                     }
-
                     service.buscarPorCpf(opcaoCpf)
                             .ifPresentOrElse(
                                     conta -> System.out.println(Formatter.ContaFormatter.formatar(conta.fromDto())),
@@ -203,7 +186,6 @@ public class MenuPrincipal {
                             );                    break;
                 case 7:
                     List<Conta> contas = service.listarAtivos();
-
                     if (contas.isEmpty()) {
                         System.out.println("Nenhuma conta ativa encontrada.");
                     } else {
