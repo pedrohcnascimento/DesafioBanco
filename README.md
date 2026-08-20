@@ -158,29 +158,3 @@ Digite a opcao desejada:
 
 Siga as instruções no console para interagir com o sistema.
 
-## Configuração Spring Boot
-
-O projeto agora possui uma configuração inicial baseada no projeto `desafioBancoDIO`, mantendo as classes de domínio e a aplicação de console existentes para permitir uma migração gradual.
-
-A aplicação Spring Boot é inicializada por `org.phcn.DesafioBancoApplication`. O projeto utiliza Java 21, Spring Web, Spring Data JPA, H2, Bean Validation, Lombok e Springdoc OpenAPI. O banco H2 é executado em memória nesta etapa, sem substituir ainda a persistência existente em `src/main/resources/contas.json`.
-
-### Execução
-
-Com o Maven instalado, execute:
-
-```bash
-mvn clean test
-mvn spring-boot:run
-```
-
-Ou utilize o Maven Wrapper incluído no repositório:
-
-```bash
-./mvnw clean test
-./mvnw spring-boot:run
-```
-
-Após iniciar a aplicação, a documentação Swagger estará disponível em `http://localhost:8080/swagger-ui.html`, a especificação OpenAPI em `http://localhost:8080/api-docs` e o console H2 em `http://localhost:8080/h2-console`.
-
-Esta configuração é a base para as próximas etapas: transformar as entidades atuais em entidades JPA, criar os repositórios Spring Data, expor os casos de uso como endpoints REST e substituir progressivamente o menu CLI.
-
